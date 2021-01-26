@@ -1,4 +1,4 @@
-![vid](https://github.com/akshaaatt/Media-Picker/blob/master/promo/vid.gif)]
+![vid](https://github.com/akshaaatt/Media-Picker/blob/master/promo/vid.gif)
 [![1611683708571.jpg](https://i.postimg.cc/CLcGscL2/1611683708571.jpg)](https://postimg.cc/4mhHJbcv)
 [![1611683708587.jpg](https://i.postimg.cc/sDjPWkyS/1611683708587.jpg)](https://postimg.cc/gr76FBxk)
 
