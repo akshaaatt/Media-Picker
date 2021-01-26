@@ -1,0 +1,3 @@
+include ':dazzle'
+include ':app'
+rootProject.name = "Media Picker"

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/black"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/light_black"
+        app:title="@string/app_name"
+        app:navigationIcon="@drawable/ic_puzzle"
+        app:menu="@menu/top"
+        app:titleTextColor="@color/white"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_below="@id/toolbar"
+        android:layout_above="@id/selectMedia"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/media" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/selectMedia"
+        android:layout_above="@id/horizontalScroll"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="40dp"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        android:backgroundTint="@color/light_black"
+        android:foreground="?attr/selectableItemBackground"
+        android:text="@string/select_media"
+        android:textColor="@color/teal_200"
+        android:textStyle="bold" />
+
+    <HorizontalScrollView
+        android:scrollbarStyle="outsideOverlay"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/horizontalScroll"
+        android:paddingBottom="20dp"
+        android:clipToPadding="false"
+        android:layout_width="match_parent"
+        android:background="@color/black"
+        android:layout_height="200dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="0dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/imageContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
+    </HorizontalScrollView>
+
+</RelativeLayout>
