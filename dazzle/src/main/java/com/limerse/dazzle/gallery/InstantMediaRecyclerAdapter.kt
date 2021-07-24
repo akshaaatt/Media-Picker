@@ -1,4 +1,4 @@
-package com.alphelios.dazzle.gallery
+package com.limerse.dazzle.gallery
 
 import android.content.Context
 import android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO
@@ -11,9 +11,9 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.alphelios.dazzle.databinding.RecyclerItemMediaBinding
-import com.alphelios.dazzle.interfaces.MediaClickInterface
-import com.alphelios.dazzle.utils.GeneralUtils.convertDpToPixel
+import com.limerse.dazzle.databinding.RecyclerItemMediaBinding
+import com.limerse.dazzle.interfaces.MediaClickInterface
+import com.limerse.dazzle.utils.GeneralUtils.convertDpToPixel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.bitmap.CenterCrop

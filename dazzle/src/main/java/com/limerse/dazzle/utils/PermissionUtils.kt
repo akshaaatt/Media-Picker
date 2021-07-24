@@ -1,4 +1,4 @@
-package com.alphelios.dazzle.utils
+package com.limerse.dazzle.utils
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -6,7 +6,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import com.alphelios.dazzle.interfaces.PermissionCallback
+import com.limerse.dazzle.interfaces.PermissionCallback
 
 object PermissionUtils {
 

@@ -1,6 +1,6 @@
-package com.alphelios.dazzle.interfaces
+package com.limerse.dazzle.interfaces
 
-import com.alphelios.dazzle.gallery.MediaModel
+import com.limerse.dazzle.gallery.MediaModel
 
 interface MediaClickInterface {
     fun onMediaClick(media: MediaModel)

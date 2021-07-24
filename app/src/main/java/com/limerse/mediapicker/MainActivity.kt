@@ -1,4 +1,4 @@
-package com.alphelios.mediapicker
+package com.limerse.mediapicker
 
 import android.app.Activity
 import android.content.Intent
@@ -7,11 +7,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.alphelios.dazzle.Dazzle
-import com.alphelios.dazzle.Dazzle.Companion.PICKED_MEDIA_LIST
-import com.alphelios.dazzle.Dazzle.Companion.REQUEST_CODE_PICKER
-import com.alphelios.dazzle.utils.DazzleOptions
-import com.alphelios.mediapicker.databinding.ActivityMainBinding
+import com.limerse.dazzle.Dazzle
+import com.limerse.dazzle.Dazzle.Companion.PICKED_MEDIA_LIST
+import com.limerse.dazzle.Dazzle.Companion.REQUEST_CODE_PICKER
+import com.limerse.dazzle.utils.DazzleOptions
+import com.limerse.mediapicker.databinding.ActivityMainBinding
 import com.bumptech.glide.Glide
 
 class MainActivity : AppCompatActivity() {
@@ -26,14 +26,13 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.github -> {
                     startActivity(Intent(Intent.ACTION_VIEW,
-                        Uri.parse("https://github.com/")))
+                        Uri.parse("https://github.com/akshaaatt")))
                 }
             }
             false
         }
 
-        val dazzleOptions =
-            DazzleOptions.init().apply {
+        val dazzleOptions = DazzleOptions.init().apply {
                 maxCount = 5                        //maximum number of images/videos to be picked
                 maxVideoDuration = 10               //maximum duration for video capture in seconds
                 allowFrontCamera = true             //allow front camera use

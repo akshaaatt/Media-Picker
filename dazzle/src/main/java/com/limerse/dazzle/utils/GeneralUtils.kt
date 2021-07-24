@@ -1,11 +1,11 @@
-package com.alphelios.dazzle.utils
+package com.limerse.dazzle.utils
 
 import android.app.Activity
 import android.content.Context
 import android.util.DisplayMetrics
 import android.view.View.*
-import com.alphelios.dazzle.R
-import com.alphelios.dazzle.databinding.ActivityDazzleBinding
+import com.limerse.dazzle.R
+import com.limerse.dazzle.databinding.ActivityDazzleBinding
 import java.text.SimpleDateFormat
 import java.util.*
 

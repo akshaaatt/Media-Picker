@@ -1,4 +1,4 @@
-package com.alphelios.dazzle.utils
+package com.limerse.dazzle.utils
 
 import android.content.ContentResolver
 import android.content.Context

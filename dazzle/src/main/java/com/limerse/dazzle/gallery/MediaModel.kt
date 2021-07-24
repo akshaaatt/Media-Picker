@@ -1,4 +1,4 @@
-package com.alphelios.dazzle.gallery
+package com.limerse.dazzle.gallery
 
 import android.net.Uri
 import androidx.annotation.Keep

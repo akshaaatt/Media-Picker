@@ -1,4 +1,4 @@
-package com.alphelios.dazzle.gallery
+package com.limerse.dazzle.gallery
 
 import android.app.Activity
 import android.content.Context
@@ -13,12 +13,12 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.alphelios.dazzle.R
-import com.alphelios.dazzle.databinding.RecyclerItemDateHeaderBinding
-import com.alphelios.dazzle.databinding.RecyclerItemMediaBinding
-import com.alphelios.dazzle.interfaces.MediaClickInterface
-import com.alphelios.dazzle.utils.GeneralUtils.getScreenWidth
-import com.alphelios.dazzle.utils.HeaderItemDecoration
+import com.limerse.dazzle.R
+import com.limerse.dazzle.databinding.RecyclerItemDateHeaderBinding
+import com.limerse.dazzle.databinding.RecyclerItemMediaBinding
+import com.limerse.dazzle.interfaces.MediaClickInterface
+import com.limerse.dazzle.utils.GeneralUtils.getScreenWidth
+import com.limerse.dazzle.utils.HeaderItemDecoration
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.bitmap.CenterCrop

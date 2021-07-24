@@ -1,4 +1,4 @@
-package com.alphelios.dazzle
+package com.limerse.dazzle
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry

@@ -1,4 +1,4 @@
-package com.alphelios.dazzle.utils
+package com.limerse.dazzle.utils
 
 import android.content.Context
 import android.graphics.Canvas
@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.alphelios.dazzle.utils.GeneralUtils.convertPixelsToDp
+import com.limerse.dazzle.utils.GeneralUtils.convertPixelsToDp
 
 class HeaderItemDecoration(private val mListener: StickyHeaderInterface, private val context: Context): RecyclerView.ItemDecoration() {
 
