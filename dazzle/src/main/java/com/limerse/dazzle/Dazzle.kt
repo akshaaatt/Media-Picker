@@ -28,7 +28,7 @@ import android.webkit.MimeTypeMap
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
@@ -37,6 +37,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.limerse.dazzle.databinding.ActivityDazzleBinding
 import com.limerse.dazzle.gallery.BottomSheetMediaRecyclerAdapter
 import com.limerse.dazzle.gallery.BottomSheetMediaRecyclerAdapter.Companion.HEADER
@@ -45,6 +46,7 @@ import com.limerse.dazzle.gallery.InstantMediaRecyclerAdapter
 import com.limerse.dazzle.gallery.MediaModel
 import com.limerse.dazzle.interfaces.MediaClickInterface
 import com.limerse.dazzle.interfaces.PermissionCallback
+import com.limerse.dazzle.utils.DazzleOptions
 import com.limerse.dazzle.utils.GeneralUtils.getStringDate
 import com.limerse.dazzle.utils.GeneralUtils.manipulateBottomSheetVisibility
 import com.limerse.dazzle.utils.HeaderItemDecoration
@@ -52,8 +54,6 @@ import com.limerse.dazzle.utils.MediaConstants.IMAGE_VIDEO_URI
 import com.limerse.dazzle.utils.MediaConstants.getFileFromUri
 import com.limerse.dazzle.utils.MediaConstants.getImageVideoCursor
 import com.limerse.dazzle.utils.PermissionUtils
-import com.limerse.dazzle.utils.DazzleOptions
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -336,10 +336,10 @@ class Dazzle : AppCompatActivity() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
                 // Display flash animation to indicate that photo was captured
-                mBinding.container.postDelayed({
-                    mBinding.container.foreground = ColorDrawable(Color.WHITE)
-                    mBinding.container.postDelayed(
-                        { mBinding.container.foreground = null }, ANIMATION_FAST_MILLIS
+                mBinding.coordinatorLayout.postDelayed({
+                    mBinding.coordinatorLayout.foreground = ColorDrawable(Color.WHITE)
+                    mBinding.coordinatorLayout.postDelayed(
+                        { mBinding.coordinatorLayout.foreground = null }, ANIMATION_FAST_MILLIS
                     )
                 }, ANIMATION_SLOW_MILLIS)
             }
@@ -449,6 +449,20 @@ class Dazzle : AppCompatActivity() {
         mBinding.textViewMessageBottom.visibility = GONE
 
         //start video
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.RECORD_AUDIO
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
         videoCapture?.startRecording(
             mOutputFileOptions,
             cameraExecutor,
@@ -647,7 +661,7 @@ class Dazzle : AppCompatActivity() {
         }
     }
 
-    private var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>? = null
+    private var bottomSheetBehavior: BottomSheetBehavior<View>? = null
 
     private fun handleBottomSheet() {
 
@@ -725,7 +739,6 @@ class Dazzle : AppCompatActivity() {
                         mInstantMediaAdapter?.imageCount = count
                         mBinding.textViewImageCount.text = count.toString()
                     }
-
                 }
 
                 val imageCount =
