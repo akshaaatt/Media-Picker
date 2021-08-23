@@ -1,3 +1,29 @@
+<h1 align="center">Media-Picker</h1>
+
+<p align="center">
+    <a href="https://github.com/akshaaatt/Media-Picker/commits/master">
+    <img src="https://img.shields.io/github/last-commit/akshaaatt/Media-Picker.svg?style=flat-square&logo=github&logoColor=white"
+         alt="GitHub last commit">
+    <a href="https://github.com/akshaaatt/Media-Picker/issues">
+    <img src="https://img.shields.io/github/issues-raw/akshaaatt/Media-Picker.svg?style=flat-square&logo=github&logoColor=white"
+         alt="GitHub issues">
+    <a href="https://github.com/akshaaatt/Media-Picker/pulls">
+    <img src="https://img.shields.io/github/issues-pr-raw/akshaaatt/Media-Picker.svg?style=flat-square&logo=github&logoColor=white"
+         alt="GitHub pull requests">
+    <img src="https://PlayBadges.pavi2410.me/badge/downloads?id=com.limerse.social">
+    <img src="https://PlayBadges.pavi2410.me/badge/ratings?id=com.limerse.social">
+</p>
+      
+<p align="center">
+  <a href="#features">Features</a> •
+  <a href="#development">Development</a> •
+  <a href="#usage">Usage</a> •
+  <a href="#license">License</a> •
+  <a href="#contribution">Contribution</a>
+</p>
+
+---
+
 ![vid](https://github.com/akshaaatt/Media-Picker/blob/master/promo/vid.gif)
 [![1611683708571.jpg](https://i.postimg.cc/CLcGscL2/1611683708571.jpg)](https://postimg.cc/4mhHJbcv)
 [![1611683708587.jpg](https://i.postimg.cc/sDjPWkyS/1611683708587.jpg)](https://postimg.cc/gr76FBxk)
