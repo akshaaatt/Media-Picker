@@ -31,7 +31,7 @@ allprojects {
 
 ```
 dependencies {
-    implementation 'com.github.akshaaatt:Media-Picker:1.0.1'
+    implementation 'com.github.akshaaatt:Media-Picker:1.0.2'
 }
 ```
 
