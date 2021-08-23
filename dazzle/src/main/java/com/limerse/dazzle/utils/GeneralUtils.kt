@@ -2,6 +2,7 @@ package com.limerse.dazzle.utils
 
 import android.app.Activity
 import android.content.Context
+import android.os.Build
 import android.util.DisplayMetrics
 import android.view.View.*
 import com.limerse.dazzle.R
@@ -17,19 +18,25 @@ object GeneralUtils {
         mBinding.constraintBottomSheetTop.alpha =     slideOffSet
         mBinding.recyclerViewBottomSheetMedia.alpha = slideOffSet
 
-        if ((1 - slideOffSet) == 0f && mBinding.recyclerViewInstantMedia.visibility == VISIBLE){
-            mBinding.recyclerViewInstantMedia.visibility = GONE
-            mBinding.constraintCheck.visibility = GONE
-        }else if(mBinding.recyclerViewInstantMedia.visibility == GONE && (1 - slideOffSet) > 0f){
-            mBinding.recyclerViewInstantMedia.visibility = VISIBLE
-            if (count > 0) mBinding.constraintCheck.visibility = VISIBLE
-        }
-        if (slideOffSet > 0f && mBinding.recyclerViewBottomSheetMedia.visibility == INVISIBLE){
-            mBinding.recyclerViewBottomSheetMedia.visibility = VISIBLE
-            mBinding.constraintBottomSheetTop.visibility = VISIBLE
-        }else if (slideOffSet == 0f && mBinding.recyclerViewBottomSheetMedia.visibility == VISIBLE){
-            mBinding.recyclerViewBottomSheetMedia.visibility = INVISIBLE
-            mBinding.constraintBottomSheetTop.visibility = GONE
+        when {
+            (1 - slideOffSet) == 0f && mBinding.recyclerViewInstantMedia.visibility == VISIBLE -> {
+                mBinding.recyclerViewInstantMedia.visibility = GONE
+                mBinding.constraintCheck.visibility = GONE
+            }
+            mBinding.recyclerViewInstantMedia.visibility == GONE && (1 - slideOffSet) > 0f -> {
+                mBinding.recyclerViewInstantMedia.visibility = VISIBLE
+                if (count > 0){
+                    mBinding.constraintCheck.visibility = VISIBLE
+                }
+            }
+            slideOffSet > 0f && mBinding.recyclerViewBottomSheetMedia.visibility == INVISIBLE -> {
+                mBinding.recyclerViewBottomSheetMedia.visibility = VISIBLE
+                mBinding.constraintBottomSheetTop.visibility = VISIBLE
+            }
+            slideOffSet == 0f && mBinding.recyclerViewBottomSheetMedia.visibility == VISIBLE -> {
+                mBinding.recyclerViewBottomSheetMedia.visibility = INVISIBLE
+                mBinding.constraintBottomSheetTop.visibility = GONE
+            }
         }
     }
 
@@ -57,7 +64,9 @@ object GeneralUtils {
 
     fun getScreenWidth(activity: Activity): Int {
         val displayMetrics = DisplayMetrics()
-        activity.display?.getRealMetrics(displayMetrics)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            activity.display?.getRealMetrics(displayMetrics)
+        }
         return displayMetrics.widthPixels
     }
 
