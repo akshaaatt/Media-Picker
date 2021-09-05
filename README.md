@@ -96,4 +96,5 @@ dependencies {
 
 ## Contribution
 
-You are most welcome to contribute to this project!
+You are most welcome to contribute to this project.
+Always looking forward for your support! 
