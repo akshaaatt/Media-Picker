@@ -28,6 +28,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+    allprojects {
+        repositories {
+            google()
+            maven { url "https://jitpack.io" }
+            jcenter()
+        }
+    }
 }
 
 dependencies {
@@ -48,4 +55,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
     implementation project(':dazzle')
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
+
 }

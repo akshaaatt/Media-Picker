@@ -13,6 +13,7 @@ import com.limerse.dazzle.Dazzle.Companion.REQUEST_CODE_PICKER
 import com.limerse.dazzle.utils.DazzleOptions
 import com.limerse.mediapicker.databinding.ActivityMainBinding
 import com.bumptech.glide.Glide
+import com.limerse.dazzle.DazzleGallery
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,11 +38,14 @@ class MainActivity : AppCompatActivity() {
                 maxVideoDuration = 10               //maximum duration for video capture in seconds
                 allowFrontCamera = true             //allow front camera use
                 excludeVideos = false               //exclude or include video functionalities
-            }
+                cropEnabled = true
+        }
 
         binding.selectMedia.setOnClickListener {
             Dazzle.startPicker(this, dazzleOptions)    //this -> context of Activity or Fragment
         }
+        binding.selectGallery.setOnClickListener {
+            DazzleGallery.startPicker(this, dazzleOptions)         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

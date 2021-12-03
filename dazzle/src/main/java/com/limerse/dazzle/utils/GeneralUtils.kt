@@ -7,6 +7,7 @@ import android.util.DisplayMetrics
 import android.view.View.*
 import com.limerse.dazzle.R
 import com.limerse.dazzle.databinding.ActivityDazzleBinding
+import com.limerse.dazzle.databinding.ActivityDazzleGalleryBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,6 +30,22 @@ object GeneralUtils {
                     mBinding.constraintCheck.visibility = VISIBLE
                 }
             }
+            slideOffSet > 0f && mBinding.recyclerViewBottomSheetMedia.visibility == INVISIBLE -> {
+                mBinding.recyclerViewBottomSheetMedia.visibility = VISIBLE
+                mBinding.constraintBottomSheetTop.visibility = VISIBLE
+            }
+            slideOffSet == 0f && mBinding.recyclerViewBottomSheetMedia.visibility == VISIBLE -> {
+                mBinding.recyclerViewBottomSheetMedia.visibility = INVISIBLE
+                mBinding.constraintBottomSheetTop.visibility = GONE
+            }
+        }
+    }
+    fun manipulateBottomSheetVisibility(slideOffSet: Float, mBinding: ActivityDazzleGalleryBinding, count: Int){
+        mBinding.constraintCheck.alpha = 1 - slideOffSet
+        mBinding.constraintBottomSheetTop.alpha =     slideOffSet
+        mBinding.recyclerViewBottomSheetMedia.alpha = slideOffSet
+
+        when {
             slideOffSet > 0f && mBinding.recyclerViewBottomSheetMedia.visibility == INVISIBLE -> {
                 mBinding.recyclerViewBottomSheetMedia.visibility = VISIBLE
                 mBinding.constraintBottomSheetTop.visibility = VISIBLE
