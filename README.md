@@ -1,6 +1,9 @@
 <h1 align="center">Media-Picker</h1>
 
 <p align="center">
+    <img src="https://jitpack.io/v/akshaaatt/Media-Picker.svg?style=flat-square&logo=github&logoColor=white"
+         alt="GitHub issues">
+    <a href="https://jitpack.io/#akshaaatt/Media-Picker">
     <a href="https://github.com/akshaaatt/Media-Picker/commits/master">
     <img src="https://img.shields.io/github/last-commit/akshaaatt/Media-Picker.svg?style=flat-square&logo=github&logoColor=white"
          alt="GitHub last commit">
