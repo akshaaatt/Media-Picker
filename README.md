@@ -10,8 +10,6 @@
     <a href="https://github.com/akshaaatt/Media-Picker/pulls">
     <img src="https://img.shields.io/github/issues-pr-raw/akshaaatt/Media-Picker.svg?style=flat-square&logo=github&logoColor=white"
          alt="GitHub pull requests">
-    <img src="https://PlayBadges.pavi2410.me/badge/downloads?id=com.limerse.social">
-    <img src="https://PlayBadges.pavi2410.me/badge/ratings?id=com.limerse.social">
 </p>
       
 <p align="center">
