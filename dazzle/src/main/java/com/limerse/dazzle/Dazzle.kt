@@ -16,6 +16,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
+import android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.HapticFeedbackConstants.LONG_PRESS
@@ -33,6 +34,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.net.toFile
+import androidx.core.net.toUri
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -54,6 +57,7 @@ import com.limerse.dazzle.utils.MediaConstants.IMAGE_VIDEO_URI
 import com.limerse.dazzle.utils.MediaConstants.getFileFromUri
 import com.limerse.dazzle.utils.MediaConstants.getImageVideoCursor
 import com.limerse.dazzle.utils.PermissionUtils
+import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -67,6 +71,7 @@ import kotlin.collections.ArrayList
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
+
 
 class Dazzle : AppCompatActivity() {
 
@@ -133,7 +138,7 @@ class Dazzle : AppCompatActivity() {
         }, ContextCompat.getMainExecutor(this))
     }
 
-    private fun initViews(){
+    private fun initViews() {
 
         mBinding.imageViewChangeCamera.let {
 
@@ -325,10 +330,17 @@ class Dazzle : AppCompatActivity() {
                         val mPathList = ArrayList<String>()
                         mPathList.add(savedUri.toString())
 
-                        val intent = Intent()
-                        intent.putExtra(PICKED_MEDIA_LIST, mPathList)
-                        setResult(Activity.RESULT_OK, intent)
-                        finish()
+                        if (mDazzleOptions.cropEnabled) {
+                            // start cropping activity for pre-acquired image saved on the device
+                            CropImage.activity(savedUri)
+                                .setInitialCropWindowPaddingRatio(0f)
+                                .start(this@Dazzle);
+                        } else {
+                            val intent = Intent()
+                            intent.putExtra(PICKED_MEDIA_LIST, mPathList)
+                            setResult(Activity.RESULT_OK, intent)
+                            finish()
+                        }
                     }
                 })
 
@@ -342,6 +354,37 @@ class Dazzle : AppCompatActivity() {
                         { mBinding.coordinatorLayout.foreground = null }, ANIMATION_FAST_MILLIS
                     )
                 }, ANIMATION_SLOW_MILLIS)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            val result = CropImage.getActivityResult(data)
+            if (resultCode == RESULT_OK) {
+                val savedUri = result.uri
+                val mimeType = MimeTypeMap.getSingleton()
+                    .getMimeTypeFromExtension(savedUri.toFile().extension)
+                MediaScannerConnection.scanFile(
+                    this@Dazzle,
+                    arrayOf(savedUri.toFile().absolutePath),
+                    arrayOf(mimeType)
+                ) { _, uri ->
+                    Log.d(TAG, "Image capture scanned into media store: $uri")
+                }
+                val mPathList = ArrayList<String>()
+                mPathList.add(savedUri.toString())
+
+                val intent = Intent()
+                intent.putExtra(PICKED_MEDIA_LIST, mPathList)
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                val error = result.error
+                setResult(Activity.RESULT_CANCELED, intent)
+                finish()
             }
         }
     }
@@ -375,9 +418,9 @@ class Dazzle : AppCompatActivity() {
 
         mBinding.imageViewClick.setOnLongClickListener {
             if (!mDazzleOptions.excludeVideos) {
-                try{
+                try {
                     takeVideo(it)
-                }catch (e : Exception) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
@@ -632,10 +675,15 @@ class Dazzle : AppCompatActivity() {
                 resources.getColor(R.color.colorWhite, null)
             )
         } else {
-            mBinding.constraintBottomSheetTop.setBackgroundColor(ContextCompat.getColor(applicationContext,R.color.colorPrimary))
+            mBinding.constraintBottomSheetTop.setBackgroundColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorPrimary
+                )
+            )
             DrawableCompat.setTint(
                 mBinding.imageViewBack.drawable,
-                ContextCompat.getColor(applicationContext,R.color.colorWhite)
+                ContextCompat.getColor(applicationContext, R.color.colorWhite)
             )
         }
     }
@@ -653,10 +701,15 @@ class Dazzle : AppCompatActivity() {
                 resources.getColor(R.color.colorBlack, null)
             )
         } else {
-            mBinding.constraintBottomSheetTop.setBackgroundColor(ContextCompat.getColor(applicationContext,R.color.colorWhite))
+            mBinding.constraintBottomSheetTop.setBackgroundColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorWhite
+                )
+            )
             DrawableCompat.setTint(
                 mBinding.imageViewBack.drawable,
-                ContextCompat.getColor(applicationContext,R.color.colorBlack)
+                ContextCompat.getColor(applicationContext, R.color.colorBlack)
             )
         }
     }
@@ -692,6 +745,8 @@ class Dazzle : AppCompatActivity() {
 
         var notifiedUp = false
         var notifiedDown = false
+
+
 
         bottomSheetBehavior?.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
@@ -749,12 +804,14 @@ class Dazzle : AppCompatActivity() {
 
             }
 
-            override fun onStateChanged(bottomSheet: View, newState: Int) {/*Not Required*/ }
+            override fun onStateChanged(bottomSheet: View, newState: Int) {/*Not Required*/
+            }
         })
 
         mBinding.imageViewBack.setOnClickListener {
             bottomSheetBehavior?.setState(BottomSheetBehavior.STATE_COLLAPSED)
         }
+
 
         mBinding.constraintCheck.setOnClickListener { pickImages() }
         mBinding.textViewOk.setOnClickListener { pickImages() }
@@ -779,10 +836,15 @@ class Dazzle : AppCompatActivity() {
                     resources.getColor(R.color.colorWhite, null)
                 )
             } else {
-                mBinding.constraintBottomSheetTop.setBackgroundColor( ContextCompat.getColor(applicationContext,R.color.colorPrimary))
+                mBinding.constraintBottomSheetTop.setBackgroundColor(
+                    ContextCompat.getColor(
+                        applicationContext,
+                        R.color.colorPrimary
+                    )
+                )
                 DrawableCompat.setTint(
                     mBinding.imageViewBack.drawable,
-                    ContextCompat.getColor(applicationContext,R.color.colorWhite)
+                    ContextCompat.getColor(applicationContext, R.color.colorWhite)
                 )
             }
         }
@@ -790,28 +852,43 @@ class Dazzle : AppCompatActivity() {
 
     private fun pickImages() {
         val mPathList = ArrayList<String>()
-
+        val mPath = ArrayList<Uri>()
         galleryImageList.map { mediaModel ->
             if (mediaModel.isSelected) {
-                mPathList.add(getFileFromUri(contentResolver,mediaModel.mMediaUri!!,cacheDir).path)
+                mPathList.add(
+                    getFileFromUri(
+                        contentResolver,
+                        mediaModel.mMediaUri!!,
+                        cacheDir
+                    ).path
+                )
+                if (mediaModel.mMediaType == MEDIA_TYPE_IMAGE) {
+                    mPath.add(mediaModel.mMediaUri!!)
+                }
             }
         }
 
-        val intent = Intent()
-        intent.putExtra(PICKED_MEDIA_LIST, mPathList)
-        setResult(Activity.RESULT_OK, intent)
-        finish()
+        if (mDazzleOptions.cropEnabled && mPath.size == 1) {
+            CropImage.activity(mPath[0])
+                .setInitialCropWindowPaddingRatio(0f).start(this@Dazzle);
+        } else {
+            val intent = Intent()
+            intent.putExtra(PICKED_MEDIA_LIST, mPathList)
+            setResult(RESULT_OK, intent)
+            finish()
+        }
     }
 
     override fun onBackPressed() {
         when {
-            bottomSheetBehavior?.state == BottomSheetBehavior.STATE_EXPANDED -> bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
+            bottomSheetBehavior?.state == BottomSheetBehavior.STATE_EXPANDED -> bottomSheetBehavior?.state =
+                BottomSheetBehavior.STATE_COLLAPSED
             mInstantMediaAdapter?.imageCount != null && mInstantMediaAdapter?.imageCount!! > 0 -> removeSelection()
             else -> super.onBackPressed()
         }
     }
 
-    private fun removeSelection(){
+    private fun removeSelection() {
         mInstantMediaAdapter?.imageCount = 0
         mBottomMediaAdapter?.imageCount = 0
         for (i in 0 until galleryImageList.size) galleryImageList[i].isSelected = false
@@ -832,10 +909,15 @@ class Dazzle : AppCompatActivity() {
                 resources.getColor(R.color.colorBlack, null)
             )
         } else {
-            mBinding.constraintBottomSheetTop.setBackgroundColor(ContextCompat.getColor(applicationContext,R.color.colorWhite))
+            mBinding.constraintBottomSheetTop.setBackgroundColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorWhite
+                )
+            )
             DrawableCompat.setTint(
                 mBinding.imageViewBack.drawable,
-                ContextCompat.getColor(applicationContext,R.color.colorBlack)
+                ContextCompat.getColor(applicationContext, R.color.colorBlack)
             )
         }
     }
