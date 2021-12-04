@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.limerse.dazzle">
+    package="com.aemerse.dazzle">
 
     <uses-feature android:name="android.hardware.camera.any" />
 
@@ -9,10 +9,10 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application>
-        <activity android:name="com.limerse.dazzle.Dazzle"
+        <activity android:name="com.aemerse.dazzle.Dazzle"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name="com.limerse.dazzle.DazzleGallery"
+        <activity android:name="com.aemerse.dazzle.DazzleGallery"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
